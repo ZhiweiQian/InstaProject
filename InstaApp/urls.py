@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """BabyInstagram URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from InstaApp.views import HelloWorld
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('insta/', include('InstaApp.urls')),#if a url path start with 'insta',go to the app 'InstaApp' & find the urls.py under it.
+        path('', HelloWorld.as_view(), name='helloworld'),
 ]
