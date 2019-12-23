@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <div>
 	<a href = "{% url 'post_update' object.id%}">Update Post</a>
 	<a href = "{% url 'post_delete' object.id%}">Delete Post</a>
@@ -7,3 +11,5 @@
 <!-- when you pass an object to this template, show the title of this object as paragraph-->
 <image src = "/{{object.image}}">
 <!-- show the image of the object as an image here. add a "/" before image route means the route is based on base directory, not add on current directory -->
+
+{% endblock content %}
