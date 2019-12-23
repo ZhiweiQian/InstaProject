@@ -1,0 +1,10 @@
+<h1>Login</h1>
+
+<form method = "post">
+	{% csrf_token %}
+	<!-- csrf_token is  provided by django to protect this form from hack -->
+	{{ form.as_p }}
+	<!-- double paranthesis means inside it is a parameter passed in -->
+	<!-- as_p means as paragraph -->
+	<button type = "submit">Login</button>	
+</form>

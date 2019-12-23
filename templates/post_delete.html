@@ -1,0 +1,8 @@
+<h1>Delete Post</h1>
+
+<form action = "" method = "post" enctype = "multipart/form-data">
+	{% csrf_token %}
+	<!-- csrf_token is  provided by django to protect this form from hack -->
+	<p>Do you want to delete "{{post.title}}" ?</p>
+	<button type = "submit">Delete</button>	
+</form>
