@@ -5,18 +5,24 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Insta</title>
-        <link href="{% static 'css/mystyle.css' %}" rel="stylesheet">
-        {% comment %} <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static 'vendor/font-awesome-4.6.3/css/font-awesome.min.css' %}" rel="stylesheet">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">{% endcomment %}
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
     </head>
     <body>
 
         {% include 'header.html' %}
         
 
-        {% block content %}
-        {% endblock content%}
+        <div class="content-wrapper">
+            <div class="container">
+                {% block content %}
+                {% endblock content%}
+            </div>
+        </div>
+
+
+        
 
     </body>
 </html>
