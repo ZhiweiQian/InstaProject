@@ -1,7 +1,8 @@
+from annoying.decorators import ajax_request
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
-from InstaApp.models import Post
+from InstaApp.models import Post, Like
 from InstaApp.forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -38,5 +39,24 @@ class SignUp(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'signup.html'
     success_url = reverse_lazy("login")
+
     
-    
+@ajax_request#the function addLike() is used to reponse to ajax request
+def addLike(request):
+    post_pk = request.POST.get('post_pk')
+    post = Post.objects.get(pk=post_pk)
+    try:
+        like = Like(post=post, user=request.user) #create a models.Like object
+        like.save()#save the like object into database
+        #if this (post, user) pair already have a like relationship, because we defined unique_together under Like, 
+        #this will throw an error, will be handled by Exception.
+        result = 1
+    except Exception as e:#if a user already liked a post, then click the like icon again, that means unlike the post
+        like = Like.objects.get(post=post, user=request.user)
+        like.delete()#delete this like object from database
+        result = 0
+
+    return {#jason format
+        'result': result,
+        'post_pk': post_pk
+    }    

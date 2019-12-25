@@ -1,6 +1,8 @@
 
 {% extends "base.html" %}
 
+{% load custom_tags %}
+
 {% block content %}
 
 <div class="cards-listing">
@@ -31,8 +33,13 @@
                         {% endif %}
                     </div>
                     <section class = "input-row">
-                    	<i class="fa fa-heart-o submit-like" aria-hidden="true"></i>
+                    	<i class="fa {% has_user_liked_post post user %} submit-like" aria-hidden="true"></i>
                     	<!-- fa means font awesome -->
+                    	<!-- the following div will not show, because stule = "display: none". it serve as sybling of the above i to save info for i for use in static/js/index.js -->
+                    	<div class="hidden-data {{ post.pk }}" style="display: none;">
+                            <span class="post-pk">{{ post.pk }}</span>
+                        </div>
+
                     </section>
 
 
