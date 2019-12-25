@@ -1,0 +1,1 @@
+web:gunicorn BabyInstagram.wsgi --log-file-
