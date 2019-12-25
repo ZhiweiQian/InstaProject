@@ -12,6 +12,44 @@ class InstaUser(AbstractUser):
             blank = True,
             null = True
             )
+    
+    def get_connections(self):
+        #get all users followed by this user, 
+        connections = UserConnection.objects.filter(creator=self) 
+        #use .filter instead of .get because need to return multiple users.
+        return connections #connections is a set
+
+    def get_followers(self):
+        #get all user following this user
+        followers = UserConnection.objects.filter(following=self)
+        return followers #followers is a set
+
+    def is_followed_by(self, user):
+        #check whether current user is followed by the parameter user
+        followers = UserConnection.objects.filter(following=self)
+        return followers.filter(creator=user).exists()
+
+    def get_absolute_url(self):
+        return reverse('profile', args=[str(self.id)])
+
+    def __str__(self):
+        return self.username
+
+class UserConnection(models.Model):
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    creator = models.ForeignKey(
+        InstaUser,
+        on_delete=models.CASCADE,
+        related_name="friendship_creator_set") 
+        #A is creator, then A.friendship_creator_set returns all users followed by this creator
+    following = models.ForeignKey(
+        InstaUser,
+        on_delete=models.CASCADE,
+        related_name="friend_set")
+        # B is the user being followed (following), B.friend_set returns all users following B
+
+    def __str__(self):
+        return self.creator.username + ' follows ' + self.following.username
 
 class Post(models.Model):
     author = models.ForeignKey(
